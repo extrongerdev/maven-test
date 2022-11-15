@@ -13,6 +13,13 @@ pipeline {
                 }
             }
         }
+        stage("Goodbye"){
+            steps {
+                script {
+                sh "echo 'Bye, bye...!'"
+                }
+            }
+        }
     }
     post {
         always {
