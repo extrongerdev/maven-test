@@ -29,7 +29,7 @@ pipeline {
         stage("Goodbye"){
             steps {
                 script {
-                sh "echo 'Bye, bye ...!'"
+                sh "echo 'Bye, b  ye ...!'"
                 }
             }
         }
