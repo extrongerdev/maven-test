@@ -3,6 +3,19 @@ import groovy.json.JsonSlurperClassic
 def jsonParse(def json) {
     new groovy.json.JsonSlurperClassic().parseText(json)
 }
+
+
+void setBuildStatus(String message, String state) {
+  step([
+      $class: "GitHubCommitStatusSetter",
+      reposSource: [$class: "ManuallyEnteredRepositorySource", url: "https://github.com/extrongerdev/maven-test"],
+      contextSource: [$class: "ManuallyEnteredCommitContextSource", context: "ci/jenkins/build-status"],
+      errorHandlers: [[$class: "ChangingBuildStatusErrorHandler", result: "UNSTABLE"]],
+      statusResultSource: [ $class: "ConditionalStatusResultSource", results: [[$class: "AnyBuildResult", message: message, state: state]] ]
+  ]);
+}
+
+
 pipeline {
     agent any
     stages {
@@ -26,10 +39,10 @@ pipeline {
             sh "echo 'fase always executed post'"
         }
         success {
-            sh "echo 'fase success'"
+            setBuildStatus("Build succeeded", "SUCCESS");
         }
         failure {
-            sh "echo 'fase failure'"
+            setBuildStatus("Build failed", "FAILURE");
         }
     }
 }
