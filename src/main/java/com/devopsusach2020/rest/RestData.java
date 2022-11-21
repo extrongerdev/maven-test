@@ -39,7 +39,7 @@ public class RestData {
 		RestTemplate restTemplate = new RestTemplate();
 	    ResponseEntity<String> call= restTemplate.getForEntity("https://api.covid19api.com/live/country/" + message ,String.class);
 	    
-	    LOGGER.log(Level.INFO, "Consulta por pais");
+	    LOGGER.log(Level.INFO, "Consulta por pais: " + pais);
 	    
 		Pais response = new Pais();
 		int confirmed = 0;
